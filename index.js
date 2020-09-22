@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser')
 
 const config = require('./config/key')
 const { User } = require('./models/User')
+const { auth } = require('./middleware/auth')
 
 // Configure bodyParser and cookieParser
 app.use(bodyParser.urlencoded({ extended: true })) // application/x-www-form-urlencoded
@@ -34,7 +35,7 @@ app.get('/', (req, res) => {
 })
 
 // Registration endpoint
-app.post('/register', (req, res) => {
+app.post('/api/user/register', (req, res) => {
 	// Get info for registration from the client
 	const user = new User(req.body)
 
@@ -50,7 +51,7 @@ app.post('/register', (req, res) => {
 })
 
 // Login endpoint
-app.post('/login', (req, res) => {
+app.post('/api/user/login', (req, res) => {
 	// Find the email from mongodb
 	User.findOne({ email: req.body.email }, (err, user) => {
 		if (!user) {
@@ -82,6 +83,19 @@ app.post('/login', (req, res) => {
 				})
 			})
 		})
+	})
+})
+
+app.get('/api/user/auth', auth, (req, res) => {
+	res.status(200).json({
+		_id: req.user._id,
+		isAdmin: req.user.role === 0 ? false : true,
+		isAuth: true,
+		email: req.user.email,
+		name: req.user.name,
+		lastname: req.user.lastname,
+		role: req.user.role,
+		image: req.user.image
 	})
 })
 
