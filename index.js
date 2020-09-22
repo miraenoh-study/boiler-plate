@@ -5,7 +5,7 @@ const port = 5000
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
-const config = require('./config/dev')
+const config = require('./config/key')
 const { User } = require('./models/User')
 
 // Configure bodyParser
@@ -14,7 +14,7 @@ app.use(bodyParser.json()) // application/json
 
 // Connect to mongodb
 mongoose
-	.connect(config.mongodbConnextionString, {
+	.connect(config.mongoURI, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useCreateIndex: true,
