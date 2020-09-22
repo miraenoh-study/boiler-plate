@@ -1,5 +1,8 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
+const constants = require('../constants')
 
 const userSchema = mongoose.Schema({
 	name: {
@@ -51,6 +54,32 @@ userSchema.pre('save', function (next) {
 		next()
 	}
 })
+
+// Compare a given password with the password from mongodb
+userSchema.methods.comparePassword = function (plainPassword, cb) {
+	// compare the password with the encrypted password
+	// cb: Call Back
+	bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
+		if (err) return cb(err)
+
+		cb(null, isMatch)
+	})
+}
+
+// Generate a token for the user
+userSchema.methods.generateToken = function (cb) {
+	// cb: Call Back
+	let user = this
+
+	// Generate a token with jsonwebtoken
+	let token = jwt.sign(user._id.toHexString(), constants.TOKEN_KEY)
+	user.token = token
+	user.save(function (err, user) {
+		if (err) return cb(err)
+
+		cb(null, user)
+	})
+}
 
 const User = mongoose.model('User', userSchema)
 
