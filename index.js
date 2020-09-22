@@ -9,7 +9,7 @@ const config = require('./config/dev')
 // Connect to mongodb
 mongoose
   .connect(
-    'mongodb+srv://miraenoh:WsDQFxqTEIgSOtEe@boilerplate.6xvew.mongodb.net/boilerplate?retryWrites=true&w=majority',
+    config.mongodbConnextionString,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
