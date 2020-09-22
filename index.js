@@ -14,37 +14,37 @@ app.use(bodyParser.json()) // application/json
 
 // Connect to mongodb
 mongoose
-  .connect(config.mongodbConnextionString, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-  })
-  .then(() => {
-    console.log('MongoDB Connected')
-  })
-  .catch((err) => {
-    console.log(err)
-  })
+	.connect(config.mongodbConnextionString, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useCreateIndex: true,
+		useFindAndModify: false
+	})
+	.then(() => {
+		console.log('MongoDB Connected')
+	})
+	.catch((err) => {
+		console.log(err)
+	})
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+	res.send('Hello World!')
 })
 
 // Registration
 app.post('/register', (req, res) => {
-  // Get info for registration from the client
-  const user = new User(req.body)
+	// Get info for registration from the client
+	const user = new User(req.body)
 
-  // Save info into mongodb
-  user.save((err, userInfo) => {
-    if (err) return res.json({ success: false, err })
-    return res.status(200).json({
-      success: true
-    })
-  })
+	// Save info into mongodb
+	user.save((err, userInfo) => {
+		if (err) return res.json({ success: false, err })
+		return res.status(200).json({
+			success: true
+		})
+	})
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+	console.log(`Example app listening at http://localhost:${port}`)
 })
