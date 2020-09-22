@@ -1,3 +1,4 @@
+# For server
 /node_modules
 /build
 
@@ -7,6 +8,19 @@ yarn-error.log*
 
 .vscode
 
+# For client
+# dependencies
+/client/node_modules
+/client/.pnp
+.pnp.js
+# production
+/client/build
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
 # Added by Mirae Noh
 dev.js
-/client
