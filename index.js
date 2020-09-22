@@ -31,14 +31,16 @@ app.get('/', (req, res) => {
 	res.send('Hello World!')
 })
 
-// Registration
+// Registration endpoint
 app.post('/register', (req, res) => {
 	// Get info for registration from the client
 	const user = new User(req.body)
 
 	// Save info into mongodb
 	user.save((err, userInfo) => {
-		if (err) return res.json({ success: false, err })
+		if (err) {
+			return res.json({ success: false, err })
+		}
 		return res.status(200).json({
 			success: true
 		})
