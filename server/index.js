@@ -34,6 +34,10 @@ app.get('/', (req, res) => {
 	res.send('Hello World!')
 })
 
+app.get('/api/hello', (req, res) => {
+	res.send('Hello Frontend!')
+})
+
 // Registration endpoint
 app.post('/api/user/register', (req, res) => {
 	// Get info for registration from the client
